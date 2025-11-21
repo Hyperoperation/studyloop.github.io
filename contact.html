@@ -19,34 +19,50 @@
     </style>
   </head>
   <body>
-    <main class="thq-section-padding">
-      <div class="thq-section-max-width" style="width:100%;max-width:960px;margin:0 auto;">
-        <a href="./index.html" class="navigation__logo" style="margin-bottom:16px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:inherit;">
-          <div class="navigation__logo-symbol" style="width:32px;height:32px;background:var(--color-primary);border-radius:8px"></div>
-          <span class="navigation__logo-text">StudyLoop</span>
-        </a>
+    <div class="contact-container">
+      <a href="./index.html" style="text-decoration:none;color:inherit"><h2>StudyLoop</h2></a>
 
-        <section class="thq-card thq-box-shadow" style="padding:32px;border-radius:var(--border-radius-lg);background:var(--color-surface);">
-          <h2 class="thq-heading-2">Contact Us</h2>
-          <p class="thq-body-large" style="margin-top:8px;">Have a question, partnership inquiry, or report? Fill the form below or use the fallback email link.</p>
+      <div class="contact-card">
+        <h1>Contact Us</h1>
+        <p class="contact-note">Have a question, partnership inquiry, or report? Fill the form below or use the fallback email link.</p>
 
-          <form id="contact-form" class="thq-grid-auto-300" method="POST" action="https://formspree.io/f/xjkldwbl" style="margin-top:20px;gap:16px;">
-            <input id="name" name="name" type="text" placeholder="Your name" required class="thq-input" />
-            <input id="email" name="email" type="email" placeholder="you@example.com" required class="thq-input" />
-            <input id="subject" name="subject" type="text" placeholder="Subject (optional)" class="thq-input" style="grid-column:1/ -1;" />
-            <textarea id="message" name="message" rows="6" placeholder="Your message" required class="thq-input" style="grid-column:1/ -1;"></textarea>
-
-            <div style="grid-column:1/ -1;display:flex;gap:12px;align-items:center;">
-              <button type="submit" class="thq-button-filled">Send Message</button>
-              <button type="button" id="clear-btn" class="thq-button-outline">Clear</button>
-              <div id="form-status" aria-live="polite" style="margin-left:8px;color:var(--color-on-surface-secondary)"></div>
+        <form id="contact-form" class="contact-form" method="POST" action="https://formspree.io/f/xjkldwbl">
+          <div class="contact-row">
+            <div class="contact-field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" required />
             </div>
-          </form>
+            <div class="contact-field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+          </div>
 
-          <p class="thq-body-small" style="margin-top:16px">Fallback email: <a href="mailto:studyloop@outlook.com" class="thq-link">studyloop@outlook.com</a></p>
-        </section>
+          <div class="contact-row">
+            <div class="contact-field" style="flex:1 1 100%">
+              <label for="subject">Subject</label>
+              <input id="subject" name="subject" type="text" />
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-field" style="flex:1 1 100%">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+          </div>
+
+          <div class="contact-actions">
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button type="button" id="clear-btn" class="btn btn-outline">Clear</button>
+          </div>
+        </form>
+
+        <p class="contact-note">Fallback email: <a href="mailto:hello@studyloop.example">hello@studyloop.example</a></p>
+
+        <div id="form-status" aria-live="polite" style="margin-top:12px"></div>
       </div>
-    </main>
+    </div>
 
     <script>
       (function(){
