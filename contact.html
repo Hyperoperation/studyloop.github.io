@@ -31,10 +31,10 @@
           <p class="thq-body-large" style="margin-top:8px;">Have a question, partnership inquiry, or report? Fill the form below or use the fallback email link.</p>
 
           <form id="contact-form" class="thq-grid-auto-300" method="POST" action="https://formspree.io/f/xjkldwbl" style="margin-top:20px;gap:16px;">
-            <input id="name" name="name" type="text" placeholder="Your name" required class="thq-input" maxlength="100" />
-            <input id="email" name="email" type="email" placeholder="you@example.com" required class="thq-input" maxlength="254" inputmode="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
-            <input id="subject" name="subject" type="text" placeholder="Subject (optional)" class="thq-input" style="grid-column:1/ -1;" maxlength="200" />
-            <textarea id="message" name="message" rows="6" placeholder="Your message" required class="thq-input" style="grid-column:1/ -1;" maxlength="4000"></textarea>
+            <input id="name" name="name" type="text" placeholder="Your name" required class="thq-input" />
+            <input id="email" name="email" type="email" placeholder="you@example.com" required class="thq-input" />
+            <input id="subject" name="subject" type="text" placeholder="Subject (optional)" class="thq-input" style="grid-column:1/ -1;" />
+            <textarea id="message" name="message" rows="6" placeholder="Your message" required class="thq-input" style="grid-column:1/ -1;"></textarea>
 
             <div style="grid-column:1/ -1;display:flex;gap:12px;align-items:center;">
               <button type="submit" class="thq-button-filled">Send Message</button>
@@ -54,42 +54,10 @@
         const status = document.getElementById('form-status')
         const clearBtn = document.getElementById('clear-btn')
 
-        // Basic sanitization to reduce risk of reflected XSS and remove obvious SQL/meta patterns
-        function sanitizeInput(str) {
-          if (!str) return ''
-          // remove HTML tags
-          str = str.replace(/<[^>]*>/g, '')
-          // remove common SQL/meta attack fragments
-          str = str.replace(/(--|;|\/\*|\*\/|\b(DROP|INSERT|SELECT|DELETE|UPDATE)\b)/ig, '')
-          // collapse repeated whitespace
-          return str.trim()
-        }
-
         form.addEventListener('submit', function (e) {
           const action = (form.getAttribute('action') || '').trim()
 
-          // Sanitize inputs before submit (client-side defense-in-depth).
-          const sanitizedName = sanitizeInput(form.name.value)
-          const sanitizedEmail = sanitizeInput(form.email.value)
-          const sanitizedSubject = sanitizeInput(form.subject.value)
-          const sanitizedMessage = sanitizeInput(form.message.value)
-
-          // Basic email validation (client-side only)
-          const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-          if (!emailRe.test(sanitizedEmail)) {
-            e.preventDefault()
-            status.textContent = 'Please enter a valid email address.'
-            status.style.color = 'red'
-            return
-          }
-
-          // Put sanitized values back into the form so what gets sent is cleaned client-side.
-          form.name.value = sanitizedName
-          form.email.value = sanitizedEmail
-          form.subject.value = sanitizedSubject
-          form.message.value = sanitizedMessage
-
-          // If no action is configured or action still uses the placeholder, intercept and show guidance.
+          // If no action is configured or action still uses the placeholder, prevent submit and show guidance.
           if (action === '' || action.includes('your-form-id')) {
             e.preventDefault()
             status.textContent = 'Thanks — your message is ready to send. Configure a form backend (Formspree/Netlify) or use the fallback email.'
@@ -97,7 +65,7 @@
             return
           }
 
-          // Otherwise allow native submit to proceed to the configured endpoint (Formspree).
+          // If an action is set (for example, the Formspree endpoint), allow native submission.
         })
 
         clearBtn.addEventListener('click', function () {
